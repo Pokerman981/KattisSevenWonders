@@ -18,21 +18,30 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         String s = scanner.nextLine();
         if (containsWrong(s)) return;
+
+        int control = 0;
+        char last;
+
         for (int i = 0; i < s.length(); i++) {
             integerStringHashMap.put(s.charAt(i), integerStringHashMap.get(s.charAt(i))+1);
+            last = s.charAt(i);
+            if (last != s.charAt(i)) {
+                control++;
+            }
+
+            if (control > 7) {
+                total += 7;
+                control = 0;
+            }
         }
+
 
         integerStringHashMap.forEach((character, integer) -> {
             integerStringHashMap.put(character, (int) Math.pow(integerStringHashMap.get(character), 2));
         });
 
-        integerStringHashMap.forEach((character, integer) -> {
-            if (integer > 3) {
-                integerStringHashMap.put(character, integerStringHashMap.get(character)+7);
-            }
-        });
 
-        integerStringHashMap.forEach((character, integer) -> total = total + integer);
+        integerStringHashMap.forEach((character, integer) -> total =+ integer);
         System.out.println(total);
 
 
