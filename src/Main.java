@@ -22,7 +22,6 @@ public class Main {
         String s = scanner.nextLine();
         if (containsWrong(s)) return;
 
-        int control = 0;
         char index;
 
         for (int i = 0; i < s.length(); i++) {
@@ -43,26 +42,25 @@ public class Main {
         }
 
 
-        //This is fucked I need to use two loops
         int loop = 0;
-        for (int i = 0; i < bonusTracker.size(); i++) {
-            if (bonusTracker.size() < 3) break;
+
+        loop2: for (int i = 0; i < bonusTracker.size(); i++) {
+            if (bonusTracker.size() < 3) break loop2;
             for (char key : bonusTracker.keySet()) {
                 int x = bonusTracker.get(key);
-                if (x == 0) break;
+                if (x == 0) break loop2;
                 bonusTracker.put(key, x-1);
-                loop++;
             }
+
+            loop++;
+
         }
-
-
 
         integerStringHashMap.forEach((character, integer) -> {
             integerStringHashMap.put(character, (int) Math.pow(integerStringHashMap.get(character), 2));
         });
-
-
         integerStringHashMap.forEach((character, integer) -> total = total + integer);
+
         System.out.println(total + loop*7);
 
 
