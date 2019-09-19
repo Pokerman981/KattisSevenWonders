@@ -14,26 +14,47 @@ public class Main {
         }
     };
 
-    public static void main(String[] args) {
+    static HashMap<Character, Integer> bonusTracker = new HashMap<>();
+
+
+        public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         String s = scanner.nextLine();
         if (containsWrong(s)) return;
 
         int control = 0;
-        char last;
+        char index;
 
         for (int i = 0; i < s.length(); i++) {
             integerStringHashMap.put(s.charAt(i), integerStringHashMap.get(s.charAt(i))+1);
-            last = s.charAt(i);
-            if (last != s.charAt(i)) {
-                control++;
+            index = s.charAt(i);
+
+            boolean containsValue = false;
+            for (char c : bonusTracker.keySet()) {
+                if (c == index) containsValue = true;
             }
 
-            if (control > 7) {
-                total += 7;
-                control = 0;
+            if (!containsValue) {
+                bonusTracker.put(index, 1);
+
+            } else {
+                bonusTracker.put(index, bonusTracker.get(index) + 1);
             }
         }
+
+
+        //This is fucked I need to use two loops
+        int loop = 0;
+        for (int i = 0; i < bonusTracker.size(); i++) {
+            if (bonusTracker.size() < 3) break;
+            for (char key : bonusTracker.keySet()) {
+                int x = bonusTracker.get(key);
+                if (x == 0) break;
+                bonusTracker.put(key, x-1);
+                loop++;
+            }
+        }
+
 
 
         integerStringHashMap.forEach((character, integer) -> {
@@ -41,8 +62,8 @@ public class Main {
         });
 
 
-        integerStringHashMap.forEach((character, integer) -> total =+ integer);
-        System.out.println(total);
+        integerStringHashMap.forEach((character, integer) -> total = total + integer);
+        System.out.println(total + loop*7);
 
 
 
